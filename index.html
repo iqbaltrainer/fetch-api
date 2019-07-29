@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="message"></div>
+    <div id="output"></div>
+    <button id="getText"> Get Text Data </button>
+    <button id="getJson"> Get JSON Data </button>
+
+    <script>
+        document.getElementById('getText').addEventListener('click', getText);
+        document.getElementById('getJson').addEventListener('click', getJson);
+
+        function getText() {
+            fetch('simple.txt')
+                .then(function(res) {
+                    return res.text();
+                })
+                .then(function(data) {
+                    document.getElementById('message').innerHTML = data;
+                })
+        }
+
+        function getJson() {
+
+            fetch('simple.json')
+                .then((res) => res.json())
+                .then((data) => {
+                    let output = "<h2> User List </h2>";
+                    data.forEach((el) => {
+                        output += `
+                    <ul>
+<li>ID: ${ el.id }</li>
+<li>name: ${ el.name }</li>
+<li>City: ${ el.city }</li>
+</ul> 
+`
+                    });
+                    document.getElementById('output').innerHTML = output;
+                })
+                .catch()
+        }
+    </script>
+
+</body>
+
+</html>
